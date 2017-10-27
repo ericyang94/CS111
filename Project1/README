@@ -1,0 +1,54 @@
+Eric Yang 304263623
+Kevin Zuo 
+
+Lab 1a.
+
+#read-command.c is split into three parts.
+
+#1. Main Function Implementation
+#2. Helper Function Implementation
+#3. Stack Implementation
+
+-----------------------------------------------------------------------------
+
+1. Main Function Implementation
+
+We have two main functions: make_command_stream() and read_command_stream().
+
+make_command_stream() reads the input stream from the file input and loads
+the input into a buffer. Next, it calls a function to "tokenize" the buffer
+and produce a stream in the form of a linked list. The next step calls a 
+helper function to make sure each object in the stream is valid. Lastly, 
+the function calls another helper function to transform the linked list
+into a command stream.
+
+read_command_stream() looks at the current command stream and returns a pointer
+to the current node in the linked list. Then it uses recursion to return the next
+pointer in the stream and so on.
+
+-----------------------------------------------------------------------------
+
+2. Helper Function Implementation
+
+The functions in this section were created in order to split up the workload
+of implementing the main functions. Our main function make_command_stream() 
+uses the different helper functions to read the input, produce the linked list,
+validate the list, and also produce the command stream from the list.
+
+-----------------------------------------------------------------------------
+
+3. Stack Implementation
+
+The stack that we used for tokens was actually implemented as a linked list.
+The top of the stack was the tail node, which we could remove or add onto just
+like a normal stack. We used this device to hold all the command tokens that we
+got from our input.
+
+The stack that we used for commands was implemented as an array of pointers.
+The reason for this choice was for the array index to allow use to know the 
+size of the stack and also use the index to push onto or pop from the stack.
+This stack held all of the simple commands. This stack worked together with 
+token stack to determine the order of commands. Once we reached the end of a 
+command, signaled by newlines or left parenthesis or semicolons, we would pop
+one token and two commands and combine them with a helper function. The result
+would be pushed back onto the command stack.

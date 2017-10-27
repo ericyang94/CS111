@@ -1,0 +1,70 @@
+# Fill in your name, student ID, and email address in this file.
+# If you are working in a team, fill out the information for both team 
+# members.
+
+# SUBMIT THE LAB ONLY ONCE (from only one partner). This file will be
+# automatically parsed in order to give both team members credit for the
+# lab.
+
+# You need to fill in the EXERCISE sections describing your solutions
+# for Tasks 1, 2, and 3, as well as write the corresponding code.
+# If you did one or more extra credit problems, indicate which one in the
+# appropriate section below (remove the # sign first). If you have any other
+# information you'd like us to know, please add it at the end of the file.
+
+# Partner 1
+Name: Eric Siyu Yang
+Student ID: 304263623
+Email: ericyang94@ucla.edu
+
+# Partner 2 (if you're working in a team)
+Name: Kevin Zuo
+Student ID: 104201160
+Email: kevinzuo@ucla.edu
+
+# EXERCISE 1: What method you used to make your peer download and upload
+#    files in parallel?  (~1-3 sentences)
+
+In order to make the downloading and uploading parallel, we implemented forks in main() of 
+osppeer.c. This way, our program will create child processes to handle each download and 
+upload at the same time.
+
+# EXERCISE 2A: What conditions did you find and fix that would have
+#    triggered a buffer overrun bug?  (~1-3 sentences each)
+
+One condition that could trigger a buffer overrun bug is receiving a file with a long name
+from a peer which could overwrite our peer list. We set up a condition in task_upload() 
+that checks for a long file name that could cause problems and exits if it is too long.
+
+# EXERCISE 2B: What other robustness problems did you fix?  (~1-3 sentences
+#    each)
+
+One problem is the large number of IP addresses that popular trackers have. We implemented
+a condition in start_download() that checks if our buffer is full and dumps the IP addresses
+into our peer list so we can clear up the buffer afterwards.
+
+Another problem we found was the transfer of large files that could take up too much room 
+on the disk. To fix this, we added file size limiters by checking the file size in the 
+functions: task_download() and task_upload() and comparing them to the limit we set.
+
+Lastly, a problem that could cause security issues is the possibility of an attacker 
+requesting files that should be private from the tracker. We implemented a condition that 
+checks for backslashes in task_upload() in order to prevent requests for files in other
+directories.
+
+# EXERCISE 3: Describe the attacks you implemented for "evil mode".  Why
+#    are they attacks?  (~3-10 sentences each)
+
+The first attack we added relates to the buffer overflow fix we addressed earlier. We use
+a long file name to overflow the buffer of the peer. This is an attack because it will
+crash the other peer who receives the long file name.
+
+The other attack we implemented an attack that could create an infinite number of processes 
+for other peers. We repeatedly request to download from others and eventually prevent the
+peers from doing anything. This is an attack that tricks peers into believing that we
+are requesting files only to become frozen or crash.
+
+# Extra credit problems
+#Extra credit problem: none
+
+# Add any other information you'd like us to know below this line.
